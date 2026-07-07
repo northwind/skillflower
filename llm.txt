@@ -1,0 +1,43 @@
+# Skillflower
+
+## Product Positioning
+
+Skillflower is an agent-first flower gifting API and CLI. It is designed for
+OpenClaw Skill Marketplace integration and for external agents that need a
+stable sender -> receiver -> event -> recommendation -> checkout -> order
+workflow.
+
+## Core Capabilities
+
+1. Sender profile creation (`skillflower senders create`).
+2. Receiver profile and delivery address creation (`skillflower receivers create`).
+3. Occasion or recurring event creation (`skillflower receiver-events create`).
+4. Florist-backed product recommendation (`skillflower products recommend`).
+5. Checkout session creation (`skillflower checkout-sessions create`).
+6. Tokenized checkout confirmation (`skillflower checkout-sessions confirm`).
+7. Public order lookup (`skillflower orders get`).
+
+## Runtime Contract
+
+- Required env: `SKILLFLOWER_BASE_URL`, `SKILLFLOWER_API_KEY`.
+- Preferred executable: `skillflower` from `@skillflower/cli`.
+- Public API base: `/api/v1`.
+- Legacy compatibility route: `POST /api/skill`.
+- Output is JSON-first for agent parsing.
+- API and provider failures must surface explicitly; do not invent products,
+  checkout sessions, provider order ids, or successful orders.
+
+## Payment Constraint
+
+Skillflower does not collect raw card data in chat. Checkout confirmation uses
+a tokenized payment value. Local mock-provider testing uses `paymentToken=mock-paid`.
+
+## Agent Workflow
+
+1. Create sender.
+2. Create receiver with a US or Canada delivery address.
+3. Create receiver event with date, tone, budget, and recurrence.
+4. Recommend product and select `primary.id` unless the user chooses a backup.
+5. Create checkout session.
+6. Confirm with a tokenized payment value or return the checkout URL for browser completion.
+7. Look up and report the public order status.
