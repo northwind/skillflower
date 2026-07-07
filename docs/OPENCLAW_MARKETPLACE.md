@@ -1,9 +1,20 @@
 # OpenClaw Marketplace Notes
 
-This repository is the public Skillflower skill package. Publish the repository
-root, because `SKILL.md` is at the root.
+Maintainers should publish the repository root. The installable skill file is:
 
-Dry run:
+```text
+SKILL.md
+```
+
+## Listing Copy
+
+```text
+Order florist-backed flowers with an OpenClaw agent. Skillflower collects
+recipient details, recommends a bouquet, creates checkout, returns a browser
+payment link, and checks order status through the hosted Skillflower service.
+```
+
+## Dry Run
 
 ```bash
 clawhub skill publish . \
@@ -16,14 +27,15 @@ clawhub skill publish . \
 Publish only after the dry run shows the expected owner, slug, files, version,
 and changelog.
 
-The marketplace listing should describe the user-facing capability:
+## Public Package Boundary
 
-```text
-Order florist-backed flowers with an OpenClaw agent. The skill collects
-recipient details, recommends a bouquet, creates checkout, and returns order
-status through the hosted Skillflower service.
-```
+Keep this repository limited to:
 
-Do not publish private application source, provider credentials, `.env` files,
-test evidence, admin workflows, or internal deployment docs from the private
-Skillflower app repository.
+- `SKILL.md`
+- user install instructions
+- ordering contract
+- marketplace notes
+- `llm.txt`
+
+Do not publish private application source, `.env` files, provider credentials,
+provider evidence, deployment details, admin workflows, or internal test output.

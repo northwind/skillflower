@@ -1,54 +1,64 @@
 ---
 name: skillflower
-description: Let users order florist-backed flowers through the hosted Skillflower service.
+description: Help users order florist-backed flowers through the hosted Skillflower service.
 homepage: https://github.com/northwind/skillflower
 metadata:
   openclaw:
     requires:
       bins:
         - curl
-      env:
-        - SKILLFLOWER_BASE_URL
-        - SKILLFLOWER_API_KEY
 ---
 
 # Skillflower
 
-Use this skill when the user wants to send flowers, choose a bouquet, create a
-checkout session, complete payment, or check an order.
+Use this skill when a user wants to send flowers, choose a bouquet, create
+checkout, complete payment, or check an order.
 
-## Requirements
+## Configuration Check
 
-- `SKILLFLOWER_BASE_URL`: hosted Skillflower service URL.
-- `SKILLFLOWER_API_KEY`: API key issued for the user or agent.
-- `curl`: used to call Skillflower's public API.
+Before calling the API, verify these environment variables are present:
 
-If either env var is missing, stop and ask the user to configure it. Do not
-invent a host, API key, product, checkout session, or order id.
+- `SKILLFLOWER_BASE_URL`
+- `SKILLFLOWER_API_KEY`
 
-## User Inputs To Collect
-
-Before ordering, collect:
-
-- sender display name and short preference description
-- receiver display name, relationship, phone, and US or Canada delivery address
-- occasion title, event type, delivery date, tone, recurrence, and budget
-- whether the user wants to continue payment in the browser or already has a
-  tokenized payment value
-
-Never ask for raw card number, CVV, or raw bank data in chat. Skillflower only
-accepts tokenized payment values or browser checkout handoff.
-
-## API Calls
-
-Use `curl` with:
+If either value is missing, stop and tell the user to configure it:
 
 ```bash
--H "Authorization: Bearer $SKILLFLOWER_API_KEY"
--H "Content-Type: application/json"
+export SKILLFLOWER_BASE_URL="https://your-skillflower-host"
+export SKILLFLOWER_API_KEY="your-skillflower-api-key"
 ```
 
-Create sender:
+Do not invent a host, API key, product, checkout session, provider order id, or
+successful order.
+
+## Information To Collect
+
+Collect only what is needed to place the order:
+
+- sender name and a short preference description
+- receiver name, relationship, phone, and US or Canada delivery address
+- occasion type, title, delivery date, recurrence, tone, and budget
+- whether the user wants browser checkout or has an approved tokenized payment value
+
+Never ask for raw card number, CVV, or bank data in chat. The default public
+flow is browser checkout.
+
+## API Helper
+
+Use the hosted public API with bearer auth:
+
+```bash
+curl -sS -X POST "$SKILLFLOWER_BASE_URL/api/v1/..." \
+  -H "Authorization: Bearer $SKILLFLOWER_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{...}'
+```
+
+If a response contains an `error` field, report that exact error and stop.
+
+## Ordering Flow
+
+1. Create sender.
 
 ```bash
 curl -sS -X POST "$SKILLFLOWER_BASE_URL/api/v1/senders" \
@@ -57,7 +67,7 @@ curl -sS -X POST "$SKILLFLOWER_BASE_URL/api/v1/senders" \
   -d '{"displayName":"Alex","description":"Busy engineer who likes elegant bouquets","defaultCurrency":"USD"}'
 ```
 
-Create receiver:
+2. Create receiver.
 
 ```bash
 curl -sS -X POST "$SKILLFLOWER_BASE_URL/api/v1/receivers" \
@@ -66,7 +76,7 @@ curl -sS -X POST "$SKILLFLOWER_BASE_URL/api/v1/receivers" \
   -d '{"senderId":"SENDER_ID","displayName":"Mom","description":"Likes soft white and pink flowers","relationshipToSender":"mother","address":{"recipientName":"Mom","recipientPhone":"+16045550123","line1":"123 Blossom St","line2":"","city":"Seattle","state":"WA","postalCode":"98101","country":"US","deliveryNotes":"Call before delivery"}}'
 ```
 
-Create event:
+3. Create occasion.
 
 ```bash
 curl -sS -X POST "$SKILLFLOWER_BASE_URL/api/v1/receiver-events" \
@@ -75,7 +85,7 @@ curl -sS -X POST "$SKILLFLOWER_BASE_URL/api/v1/receiver-events" \
   -d '{"senderId":"SENDER_ID","receiverId":"RECEIVER_ID","eventType":"birthday","title":"Birthday","description":"Birthday bouquet","date":"2026-07-14","recurrence":"yearly","tone":"warm","budget":120,"active":true}'
 ```
 
-Recommend product:
+4. Recommend bouquet.
 
 ```bash
 curl -sS -X POST "$SKILLFLOWER_BASE_URL/api/v1/products/recommend" \
@@ -84,7 +94,9 @@ curl -sS -X POST "$SKILLFLOWER_BASE_URL/api/v1/products/recommend" \
   -d '{"senderId":"SENDER_ID","receiverId":"RECEIVER_ID","eventId":"EVENT_ID","budget":120,"tone":"warm"}'
 ```
 
-Create checkout:
+Use the returned `primary.id` unless the user chooses a backup option.
+
+5. Create checkout.
 
 ```bash
 curl -sS -X POST "$SKILLFLOWER_BASE_URL/api/v1/checkout-sessions" \
@@ -93,13 +105,14 @@ curl -sS -X POST "$SKILLFLOWER_BASE_URL/api/v1/checkout-sessions" \
   -d '{"senderId":"SENDER_ID","receiverId":"RECEIVER_ID","eventId":"EVENT_ID","selectedProductId":"PRODUCT_ID","budget":120}'
 ```
 
-If the user should complete payment in the browser, return:
+For normal users, return the browser checkout link:
 
 ```text
 $SKILLFLOWER_BASE_URL/checkout/SESSION_ID
 ```
 
-Confirm checkout only when the user has a tokenized payment value:
+6. Confirm checkout only if the user already has a tokenized payment value from
+an approved payment flow.
 
 ```bash
 curl -sS -X POST "$SKILLFLOWER_BASE_URL/api/v1/checkout-sessions/SESSION_ID/confirm" \
@@ -108,17 +121,20 @@ curl -sS -X POST "$SKILLFLOWER_BASE_URL/api/v1/checkout-sessions/SESSION_ID/conf
   -d '{"paymentToken":"TOKEN","customer":{"name":"Alex Chen","email":"alex@example.com","phone":"+12065550000","address1":"500 Sender Ave","address2":"","city":"Seattle","state":"WA","country":"US","postalCode":"98109","ip":"203.0.113.10"}}'
 ```
 
-Get order:
+7. Look up order.
 
 ```bash
 curl -sS "$SKILLFLOWER_BASE_URL/api/v1/orders/ORDER_ID" \
   -H "Authorization: Bearer $SKILLFLOWER_API_KEY"
 ```
 
-## Response Rules
+## User Response
 
-- Parse each JSON response and carry forward returned ids.
-- Present bouquet name, meaning, price, checkout link, order status, provider
-  order id, and delivery date when available.
-- If any API call returns an error JSON or non-2xx status, show the exact error
-  and stop. Do not retry with guessed fields.
+Return concise facts from JSON:
+
+- selected bouquet name, meaning, and price
+- checkout link
+- order id and provider order id
+- order status and delivery date
+
+If payment is not complete, make that explicit and return the checkout link.

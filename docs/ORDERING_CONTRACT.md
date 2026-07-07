@@ -1,41 +1,74 @@
 # Skillflower Ordering Contract
 
-This document describes the public ordering path used by the OpenClaw skill.
+This is the public contract used by the OpenClaw skill. It is intentionally
+limited to the flower-ordering path.
 
-## Required Configuration
+## Configuration
 
-- `SKILLFLOWER_BASE_URL`: hosted Skillflower service URL.
-- `SKILLFLOWER_API_KEY`: bearer token for the user or agent.
-
-Every API request uses:
+Every request uses:
 
 ```http
 Authorization: Bearer <SKILLFLOWER_API_KEY>
 Content-Type: application/json
 ```
 
-## Public Workflow
+Base URL:
 
-1. `POST /api/v1/senders`
-2. `POST /api/v1/receivers`
-3. `POST /api/v1/receiver-events`
-4. `POST /api/v1/products/recommend`
-5. `POST /api/v1/checkout-sessions`
-6. Browser payment at `/checkout/:sessionId` or tokenized confirmation at
-   `POST /api/v1/checkout-sessions/:sessionId/confirm`
-7. `GET /api/v1/orders/:orderId`
+```text
+<SKILLFLOWER_BASE_URL>
+```
 
-## Data The Agent Must Collect
+## Flow
 
-- sender display name and short preference description
-- receiver name, relationship, phone, and US or Canada delivery address
-- occasion type, title, delivery date, recurrence, tone, and budget
-- selected bouquet from the recommendation response
-- browser checkout preference or tokenized payment value
+1. Create sender: `POST /api/v1/senders`
+2. Create receiver: `POST /api/v1/receivers`
+3. Create occasion: `POST /api/v1/receiver-events`
+4. Recommend bouquet: `POST /api/v1/products/recommend`
+5. Create checkout: `POST /api/v1/checkout-sessions`
+6. Complete payment:
+   - browser handoff: `/checkout/:sessionId`
+   - tokenized confirmation: `POST /api/v1/checkout-sessions/:sessionId/confirm`
+7. Check order: `GET /api/v1/orders/:orderId`
 
-## Error Contract
+## Required User Data
 
-Skillflower returns explicit JSON errors:
+Sender:
+
+- display name
+- short preference description
+
+Receiver:
+
+- display name
+- relationship to sender
+- recipient name and phone
+- street, city, state/province, postal code, country `US` or `CA`
+- delivery notes, if any
+
+Occasion:
+
+- event type and title
+- delivery date
+- recurrence: `none`, `yearly`, or `monthly`
+- tone
+- budget in USD
+
+Payment:
+
+- browser checkout is the default
+- tokenized payment value only when provided by an approved payment flow
+
+## Agent Rules
+
+- Carry ids forward from API responses.
+- Use `primary.id` from product recommendation unless the user chooses another option.
+- Construct browser checkout URL as `<SKILLFLOWER_BASE_URL>/checkout/<sessionId>`.
+- Do not collect raw card number, CVV, or bank data.
+- Do not invent products, checkout sessions, provider order ids, payment success, or order status.
+
+## Errors
+
+Error responses are JSON:
 
 ```json
 {
@@ -43,10 +76,4 @@ Skillflower returns explicit JSON errors:
 }
 ```
 
-Agents must report the exact error and stop. They must not fabricate products,
-checkout sessions, provider order ids, payment success, or order status.
-
-## Payment Contract
-
-Skillflower does not accept raw card data in chat. Use the browser checkout URL
-or a tokenized payment value supplied by an approved payment flow.
+If an error response appears, report the exact error and stop.

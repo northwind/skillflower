@@ -1,35 +1,36 @@
 # Skillflower OpenClaw Skill
 
-## Purpose
+Skillflower is a public OpenClaw skill that lets an agent help users order
+florist-backed flowers through a hosted Skillflower service.
 
-Skillflower lets OpenClaw agents help users order florist-backed flowers through
-a hosted Skillflower service.
+## Install Surface
 
-## User-Facing Capability
+- Main skill file: `SKILL.md`
+- Manual install target: `~/.openclaw/workspace/skills/skillflower/SKILL.md`
+- Required runtime command: `curl`
+- Required configuration before ordering:
+  - `SKILLFLOWER_BASE_URL`
+  - `SKILLFLOWER_API_KEY`
 
-Users can ask an agent to send flowers for an occasion. The skill helps the
-agent collect delivery details, recommend a bouquet, create checkout, return a
-browser payment link or confirm a tokenized payment, and check order status.
+## User Capability
 
-## Required Runtime
+The user can ask an agent to send flowers for an occasion. The skill collects
+recipient details, recommends a bouquet, creates checkout, returns a browser
+payment link, and checks order status.
 
-- `SKILLFLOWER_BASE_URL`
-- `SKILLFLOWER_API_KEY`
-- `curl`
+## Ordering Path
 
-## Boundaries
-
-- Do not ask for raw card number, CVV, or bank data in chat.
-- Do not fabricate products, checkout sessions, provider order ids, or order success.
-- If the API returns an error, report the exact error and stop.
-- If payment cannot be completed inside the agent runtime, return the checkout URL.
-
-## Ordering Flow
-
-1. Create sender profile.
+1. Create sender.
 2. Create receiver and US or Canada delivery address.
-3. Create occasion with date, tone, recurrence, and budget.
-4. Recommend bouquet and select the primary option unless the user chooses another.
+3. Create occasion with date, recurrence, tone, and budget.
+4. Recommend bouquet.
 5. Create checkout session.
 6. Return browser checkout URL or confirm with tokenized payment.
-7. Look up and report order status.
+7. Look up order status.
+
+## Safety Rules
+
+- Browser checkout is the default public payment path.
+- Never collect raw card number, CVV, or bank data in chat.
+- Never fabricate products, checkout sessions, provider order ids, payment success, or order status.
+- If Skillflower returns an API error, report it exactly and stop.
