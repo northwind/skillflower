@@ -57,8 +57,8 @@ payment integrations that already produced a token.
 ## Files
 
 - [SKILL.md](SKILL.md): installable OpenClaw skill.
-- [docs/ORDERING_CONTRACT.md](docs/ORDERING_CONTRACT.md): API shape used by the skill.
-- [docs/OPENCLAW_MARKETPLACE.md](docs/OPENCLAW_MARKETPLACE.md): maintainer publishing notes.
+- [references/ORDERING_CONTRACT.md](references/ORDERING_CONTRACT.md): API shape used by the skill.
+- [references/OPENCLAW_MARKETPLACE.md](references/OPENCLAW_MARKETPLACE.md): maintainer publishing notes.
 - [llm.txt](llm.txt): short machine-readable summary.
 
 This repository is intentionally small. Private application source, provider
