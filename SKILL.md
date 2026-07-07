@@ -19,7 +19,7 @@ checkout, complete payment, or check an order.
 Use the default hosted service URL unless the user overrides it:
 
 ```bash
-BASE_URL="${SKILLFLOWER_BASE_URL:-https://skillflower--skillflower.us-east4.hosted.app}"
+BASE_URL="${SKILLFLOWER_BASE_URL:-https://skillflower-public-180536915393.us-central1.run.app}"
 ```
 
 Before calling the API, load the API key from the environment or local cache:

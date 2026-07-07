@@ -55,7 +55,7 @@ project skill/instructions folder and name it `skillflower`.
 The hosted service URL is built into the skill:
 
 ```bash
-https://skillflower--skillflower.us-east4.hosted.app
+https://skillflower-public-180536915393.us-central1.run.app
 ```
 
 Override it only when the operator gives you a different host:

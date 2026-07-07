@@ -15,7 +15,7 @@ Content-Type: application/json
 Base URL:
 
 ```text
-https://skillflower--skillflower.us-east4.hosted.app
+https://skillflower-public-180536915393.us-central1.run.app
 ```
 
 Agents may override the base URL with `SKILLFLOWER_BASE_URL` when the operator
