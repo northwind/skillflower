@@ -52,24 +52,47 @@ project skill/instructions folder and name it `skillflower`.
 
 ## Configure
 
-Ask the Skillflower operator for a hosted service URL and API key:
+The hosted service URL is built into the skill:
 
 ```bash
-export SKILLFLOWER_BASE_URL="https://your-skillflower-host"
+https://skillflower--skillflower.us-east4.hosted.app
+```
+
+Override it only when the operator gives you a different host:
+
+```bash
+export SKILLFLOWER_BASE_URL="https://another-skillflower-host"
+```
+
+Ask the Skillflower operator for an API key, then either export it:
+
+```bash
 export SKILLFLOWER_API_KEY="your-skillflower-api-key"
 ```
 
-The skill can be installed before these values are set. It must not create
-checkout sessions or orders until both values are present.
+or cache it locally:
+
+```bash
+mkdir -p ~/.skillflower
+printf '%s\n' "your-skillflower-api-key" > ~/.skillflower/api-key
+chmod 600 ~/.skillflower/api-key
+```
+
+The skill can be installed before the API key is set. It must not create
+checkout sessions or orders until a valid API key is available.
+
+The API key cannot be generated purely inside `SKILL.md`: the hosted service
+must issue or accept the key. A random local key will be rejected.
 
 ## How Agents Should Use It
 
 1. Read [SKILL.md](SKILL.md).
-2. Confirm `curl`, `SKILLFLOWER_BASE_URL`, and `SKILLFLOWER_API_KEY` are available.
-3. Collect only the order data needed from the user.
-4. Call the hosted Skillflower API as described in the skill.
-5. Return the checkout link for browser payment.
-6. Check order status only after payment is complete.
+2. Use the built-in base URL unless `SKILLFLOWER_BASE_URL` overrides it.
+3. Load `SKILLFLOWER_API_KEY` from env or `~/.skillflower/api-key`.
+4. Collect only the order data needed from the user.
+5. Call the hosted Skillflower API as described in the skill.
+6. Return the checkout link for browser payment.
+7. Check order status only after payment is complete.
 
 ## Limits
 

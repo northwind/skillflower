@@ -39,3 +39,15 @@ Keep this repository limited to:
 
 Do not publish private application source, `.env` files, provider credentials,
 provider evidence, deployment details, admin workflows, or internal test output.
+
+## Runtime Configuration
+
+The public skill includes the default hosted base URL:
+
+```text
+https://skillflower--skillflower.us-east4.hosted.app
+```
+
+Users only need a Skillflower-issued API key. The skill may cache that key at
+`~/.skillflower/api-key`, but it must not generate random local keys unless the
+hosted service adds an explicit key-registration endpoint that accepts them.

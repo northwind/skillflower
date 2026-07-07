@@ -8,9 +8,14 @@ florist-backed flowers through a hosted Skillflower service.
 - Main skill file: `SKILL.md`
 - Manual install target: `~/.openclaw/workspace/skills/skillflower/SKILL.md`
 - Required runtime command: `curl`
-- Required configuration before ordering:
-  - `SKILLFLOWER_BASE_URL`
-  - `SKILLFLOWER_API_KEY`
+- Default service URL: `https://skillflower--skillflower.us-east4.hosted.app`
+- Optional service override: `SKILLFLOWER_BASE_URL`
+- Required API key before ordering:
+  - `SKILLFLOWER_API_KEY`, or
+  - cached key at `~/.skillflower/api-key`
+
+The API key cannot be generated locally by the skill. It must be issued or
+accepted by the hosted Skillflower service.
 
 ## User Capability
 

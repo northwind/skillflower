@@ -15,8 +15,18 @@ Content-Type: application/json
 Base URL:
 
 ```text
-<SKILLFLOWER_BASE_URL>
+https://skillflower--skillflower.us-east4.hosted.app
 ```
+
+Agents may override the base URL with `SKILLFLOWER_BASE_URL` when the operator
+provides a different host.
+
+API key:
+
+- Prefer `SKILLFLOWER_API_KEY`.
+- If absent, read `~/.skillflower/api-key`.
+- Do not generate a random local key. The hosted service accepts only
+  server-issued keys.
 
 ## Flow
 
@@ -62,7 +72,7 @@ Payment:
 
 - Carry ids forward from API responses.
 - Use `primary.id` from product recommendation unless the user chooses another option.
-- Construct browser checkout URL as `<SKILLFLOWER_BASE_URL>/checkout/<sessionId>`.
+- Construct browser checkout URL as `<BASE_URL>/checkout/<sessionId>`.
 - Do not collect raw card number, CVV, or bank data.
 - Do not invent products, checkout sessions, provider order ids, payment success, or order status.
 
