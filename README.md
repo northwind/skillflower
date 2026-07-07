@@ -1,60 +1,68 @@
-# Skillflower
+# Skillflower OpenClaw Skill
 
-Skillflower is an agent-first flower gifting API and CLI for OpenClaw agents.
-It supports a stable workflow:
+Skillflower lets an OpenClaw agent help a user order florist-backed flowers.
+This repository is the public skill distribution surface for users and agents.
+It is not the private application source repository.
 
-```text
-sender -> receiver -> event -> recommend -> checkout -> confirm -> order
-```
-
-This repository contains the public OpenClaw marketplace information and skill
-package. It intentionally does not contain private provider credentials,
-deployment `.env` files, or real provider evidence.
-
-## OpenClaw Skill
-
-The skill package is in:
+The installed skill supports the ordering path:
 
 ```text
-skills/skillflower/SKILL.md
+collect recipient details -> recommend bouquet -> create checkout -> finish payment -> track order
 ```
 
-It expects:
+## What Users Can Do
 
-- `SKILLFLOWER_BASE_URL`
-- `SKILLFLOWER_API_KEY`
-- `skillflower` CLI from `@skillflower/cli`
+Ask an agent things like:
 
-## CLI
+```text
+Send birthday flowers to my mom in Seattle next Tuesday. Keep it under $120 and make it warm but not flashy.
+```
 
-Install:
+The skill guides the agent to:
+
+- collect sender, recipient, address, occasion, delivery date, tone, and budget
+- recommend a florist-backed bouquet
+- create a checkout session
+- return a browser checkout link or confirm a tokenized payment
+- look up the resulting order
+
+## Install
+
+Install the skill file into your OpenClaw workspace:
 
 ```bash
-npm install -g @skillflower/cli
+mkdir -p ~/.openclaw/workspace/skills/skillflower
+curl -fsSL https://raw.githubusercontent.com/northwind/skillflower/main/SKILL.md \
+  -o ~/.openclaw/workspace/skills/skillflower/SKILL.md
 ```
 
-Configure:
+Restart OpenClaw or start a new chat so the skill list refreshes.
+
+## Configure
+
+Skillflower needs a hosted service URL and API key:
 
 ```bash
 export SKILLFLOWER_BASE_URL="https://your-skillflower-host"
-export SKILLFLOWER_API_KEY="your-public-api-key"
+export SKILLFLOWER_API_KEY="your-skillflower-api-key"
 ```
 
-Check commands:
+Use the service URL and key issued by the Skillflower operator. Without both,
+the skill must stop before creating orders.
 
-```bash
-skillflower --help
-```
+## Payment Safety
 
-## Docs
+Do not enter raw card number, CVV, or raw bank data in chat. Skillflower uses
+browser checkout handoff or tokenized payment values only.
 
-- [API](docs/API.md)
-- [CLI](docs/CLI.md)
-- [OpenClaw marketplace notes](docs/OPENCLAW_MARKETPLACE.md)
-- [LLM integration notes](llm.txt)
+## For Agents
 
-## Safety
+Read [SKILL.md](SKILL.md) for the executable ordering contract and
+[docs/ORDERING_CONTRACT.md](docs/ORDERING_CONTRACT.md) for the public API shape
+the skill relies on.
 
-Skillflower does not collect raw card data in chat. Checkout confirmation uses
-tokenized payment values. Provider failures must surface explicitly; agents
-should not invent products, checkout sessions, order ids, or successful orders.
+## Scope
+
+This public repo intentionally contains only the installable skill and
+external ordering docs. Internal implementation, provider credentials,
+deployment config, test evidence, and admin workflows live outside this repo.

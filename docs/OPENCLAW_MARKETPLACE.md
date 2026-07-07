@@ -1,38 +1,29 @@
 # OpenClaw Marketplace Notes
 
-Skillflower's OpenClaw skill package lives at:
+This repository is the public Skillflower skill package. Publish the repository
+root, because `SKILL.md` is at the root.
+
+Dry run:
+
+```bash
+clawhub skill publish . \
+  --slug skillflower \
+  --name "Skillflower" \
+  --version 0.1.0 \
+  --dry-run
+```
+
+Publish only after the dry run shows the expected owner, slug, files, version,
+and changelog.
+
+The marketplace listing should describe the user-facing capability:
 
 ```text
-skills/skillflower/SKILL.md
+Order florist-backed flowers with an OpenClaw agent. The skill collects
+recipient details, recommends a bouquet, creates checkout, and returns order
+status through the hosted Skillflower service.
 ```
 
-The package expects:
-
-- `SKILLFLOWER_BASE_URL`
-- `SKILLFLOWER_API_KEY`
-- the `skillflower` CLI from `@skillflower/cli`
-
-Local checks:
-
-```bash
-npm test
-npm run build
-npm run test:e2e
-npm pack --workspace @skillflower/cli --dry-run
-npm exec --workspace @skillflower/cli -- skillflower --help
-```
-
-OpenClaw/ClawHub checks, when those CLIs are installed:
-
-```bash
-openclaw skills list
-clawhub skill publish ./skills/skillflower --slug skillflower --name "Skillflower" --version 0.1.0 --dry-run
-```
-
-Publish for real only after the dry run shows the intended owner, slug, files,
-version, and changelog.
-
-Do not publish the private app repository as-is. The full app repo can contain
-provider credentials, `.env`, and real provider evidence. Use the public
-`northwind/skillflower` information repository for marketplace-facing docs and
-the skill package.
+Do not publish private application source, provider credentials, `.env` files,
+test evidence, admin workflows, or internal deployment docs from the private
+Skillflower app repository.
