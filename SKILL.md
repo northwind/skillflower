@@ -56,6 +56,18 @@ Collect only what is needed to place the order:
 Never ask for raw card number, CVV, or bank data in chat. The default public
 flow is browser checkout.
 
+## First-Time Receiver Check
+
+Before creating a receiver, if the user has not already provided recipient
+delivery details, stop and ask for:
+
+- recipient delivery name and phone
+- street address, city, state or province, postal code, and country
+- optional apartment, suite, delivery notes, and relationship to sender
+
+Do not use the sample receiver address for a real user. If the user gives only
+partial details, ask only for the missing required delivery fields.
+
 ## API Helper
 
 Use the hosted public API with bearer auth:
