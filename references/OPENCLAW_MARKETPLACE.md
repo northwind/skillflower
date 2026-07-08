@@ -45,7 +45,7 @@ provider evidence, deployment details, admin workflows, or internal test output.
 The public skill includes the default hosted base URL:
 
 ```text
-https://skillflower-public-180536915393.us-central1.run.app
+https://skillflower.goosepod.org
 ```
 
 Users only need a Skillflower-issued API key. The skill may cache that key at
