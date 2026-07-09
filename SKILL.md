@@ -1,7 +1,7 @@
 ---
 name: send-flowers
 description: Help users order florist-backed flowers through the hosted Send Flowers service.
-homepage: https://github.com/northwind/skillflower
+homepage: https://github.com/northwind/send-flowers
 metadata:
   openclaw:
     requires:

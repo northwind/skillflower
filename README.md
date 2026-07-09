@@ -31,7 +31,7 @@ The skill guides the agent to:
 
 ```bash
 mkdir -p ~/.openclaw/workspace/skills/send-flowers
-curl -fsSL https://raw.githubusercontent.com/northwind/skillflower/main/SKILL.md \
+curl -fsSL https://raw.githubusercontent.com/northwind/send-flowers/main/SKILL.md \
   -o ~/.openclaw/workspace/skills/send-flowers/SKILL.md
 ```
 
@@ -44,7 +44,7 @@ folder under a `send-flowers` directory. If the runtime supports importing a
 skill from a GitHub URL, use:
 
 ```text
-https://raw.githubusercontent.com/northwind/skillflower/main/SKILL.md
+https://raw.githubusercontent.com/northwind/send-flowers/main/SKILL.md
 ```
 
 If the runtime only supports project-local instructions, copy `SKILL.md` into a
