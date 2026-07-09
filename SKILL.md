@@ -21,7 +21,8 @@ Use the default hosted service URL unless the user overrides it:
 BASE_URL="${SEND_FLOWERS_BASE_URL:-https://skillflower.goosepod.org}"
 ```
 
-Before calling the API, load the API key from the environment or local cache:
+Before calling the API, load the account access key from the environment or
+local cache:
 
 ```bash
 if [ -z "$SEND_FLOWERS_API_KEY" ] && [ -f "$HOME/.send-flowers/api-key" ]; then
@@ -29,9 +30,22 @@ if [ -z "$SEND_FLOWERS_API_KEY" ] && [ -f "$HOME/.send-flowers/api-key" ]; then
 fi
 ```
 
-If `SEND_FLOWERS_API_KEY` is still missing, stop and ask the user for a
-Send Flowers API key. If the user provides one, cache it only after they
-agree:
+If `SEND_FLOWERS_API_KEY` is still missing, stop before creating recommendations
+or checkout. Do not mention `.env`, `.env.local`, shell setup, or other
+developer configuration files to ordinary users. Explain in the user's language:
+
+```text
+I can't create a bouquet recommendation or checkout link yet because this Send
+Flowers service needs a registered account access key. If you already have one,
+send the Send Flowers API key. If not, register or request access from the Send
+Flowers operator first. I can save the key on this computer only if you explicitly
+agree to cache it.
+```
+
+Then ask only for the Send Flowers account access key and whether the user
+agrees to cache it. For nontechnical users, call it the "Send Flowers access
+key"; mention `SEND_FLOWERS_API_KEY` only if they ask how to configure it. If
+the user provides a key, cache it only after they agree:
 
 ```bash
 mkdir -p "$HOME/.send-flowers"
