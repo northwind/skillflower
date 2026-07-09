@@ -9,17 +9,17 @@ SKILL.md
 ## Listing Copy
 
 ```text
-Order florist-backed flowers with an OpenClaw agent. Skillflower collects
+Order florist-backed flowers with an OpenClaw agent. Send Flowers collects
 recipient details, recommends a bouquet, creates checkout, returns a browser
-payment link, and checks order status through the hosted Skillflower service.
+payment link, and checks order status through the hosted Send Flowers service.
 ```
 
 ## Dry Run
 
 ```bash
 clawhub skill publish . \
-  --slug skillflower \
-  --name "Skillflower" \
+  --slug send-flowers \
+  --name "Send Flowers" \
   --version 0.1.0 \
   --dry-run
 ```
@@ -48,6 +48,6 @@ The public skill includes the default hosted base URL:
 https://skillflower.goosepod.org
 ```
 
-Users only need a Skillflower-issued API key. The skill may cache that key at
-`~/.skillflower/api-key`, but it must not generate random local keys unless the
+Users only need a Send Flowers API key. The skill may cache that key at
+`~/.send-flowers/api-key`, but it must not generate random local keys unless the
 hosted service adds an explicit key-registration endpoint that accepts them.

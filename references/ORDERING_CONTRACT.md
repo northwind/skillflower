@@ -1,4 +1,4 @@
-# Skillflower Ordering Contract
+# Send Flowers Ordering Contract
 
 This is the public contract used by the OpenClaw skill. It is intentionally
 limited to the flower-ordering path.
@@ -8,7 +8,7 @@ limited to the flower-ordering path.
 Every request uses:
 
 ```http
-Authorization: Bearer <SKILLFLOWER_API_KEY>
+Authorization: Bearer <SEND_FLOWERS_API_KEY>
 Content-Type: application/json
 ```
 
@@ -18,13 +18,13 @@ Base URL:
 https://skillflower.goosepod.org
 ```
 
-Agents may override the base URL with `SKILLFLOWER_BASE_URL` when the operator
+Agents may override the base URL with `SEND_FLOWERS_BASE_URL` when the operator
 provides a different host.
 
 API key:
 
-- Prefer `SKILLFLOWER_API_KEY`.
-- If absent, read `~/.skillflower/api-key`.
+- Prefer `SEND_FLOWERS_API_KEY`.
+- If absent, read `~/.send-flowers/api-key`.
 - Do not generate a random local key. The hosted service accepts only
   server-issued keys.
 

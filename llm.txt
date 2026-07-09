@@ -1,21 +1,21 @@
-# Skillflower OpenClaw Skill
+# Send Flowers OpenClaw Skill
 
-Skillflower is a public OpenClaw skill that lets an agent help users order
-florist-backed flowers through a hosted Skillflower service.
+Send Flowers is a public OpenClaw skill that lets an agent help users order
+florist-backed flowers through a hosted Send Flowers service.
 
 ## Install Surface
 
 - Main skill file: `SKILL.md`
-- Manual install target: `~/.openclaw/workspace/skills/skillflower/SKILL.md`
+- Manual install target: `~/.openclaw/workspace/skills/send-flowers/SKILL.md`
 - Required runtime command: `curl`
 - Default service URL: `https://skillflower.goosepod.org`
-- Optional service override: `SKILLFLOWER_BASE_URL`
+- Optional service override: `SEND_FLOWERS_BASE_URL`
 - Required API key before ordering:
-  - `SKILLFLOWER_API_KEY`, or
-  - cached key at `~/.skillflower/api-key`
+  - `SEND_FLOWERS_API_KEY`, or
+  - cached key at `~/.send-flowers/api-key`
 
 The API key cannot be generated locally by the skill. It must be issued or
-accepted by the hosted Skillflower service.
+accepted by the hosted Send Flowers service.
 
 ## User Capability
 
@@ -38,4 +38,4 @@ payment link, and checks order status.
 - Browser checkout is the default public payment path.
 - Never collect raw card number, CVV, or bank data in chat.
 - Never fabricate products, checkout sessions, provider order ids, payment success, or order status.
-- If Skillflower returns an API error, report it exactly and stop.
+- If Send Flowers returns an API error, report it exactly and stop.

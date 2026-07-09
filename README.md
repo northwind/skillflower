@@ -1,7 +1,7 @@
-# Skillflower Universal Agent Skill
+# Send Flowers Universal Agent Skill
 
-Skillflower is a portable skill for Coding Agents and agentic IDEs. It lets an
-agent help a user send florist-backed flowers by collecting delivery details,
+Send Flowers is a portable skill for Coding Agents and agentic IDEs. It lets
+an agent help a user send florist-backed flowers by collecting delivery details,
 recommending a bouquet, creating checkout, and returning a browser payment link
 or order status.
 
@@ -30,9 +30,9 @@ The skill guides the agent to:
 ### OpenClaw
 
 ```bash
-mkdir -p ~/.openclaw/workspace/skills/skillflower
+mkdir -p ~/.openclaw/workspace/skills/send-flowers
 curl -fsSL https://raw.githubusercontent.com/northwind/skillflower/main/SKILL.md \
-  -o ~/.openclaw/workspace/skills/skillflower/SKILL.md
+  -o ~/.openclaw/workspace/skills/send-flowers/SKILL.md
 ```
 
 Restart OpenClaw or start a new chat so the skill list refreshes.
@@ -40,7 +40,7 @@ Restart OpenClaw or start a new chat so the skill list refreshes.
 ### Claude Code, Codex, Antigravity, And Similar Agents
 
 Add this repository's [SKILL.md](SKILL.md) to the agent runtime's local skills
-folder under a `skillflower` directory. If the runtime supports importing a
+folder under a `send-flowers` directory. If the runtime supports importing a
 skill from a GitHub URL, use:
 
 ```text
@@ -48,7 +48,7 @@ https://raw.githubusercontent.com/northwind/skillflower/main/SKILL.md
 ```
 
 If the runtime only supports project-local instructions, copy `SKILL.md` into a
-project skill/instructions folder and name it `skillflower`.
+project skill/instructions folder and name it `send-flowers`.
 
 ## Configure
 
@@ -61,21 +61,21 @@ https://skillflower.goosepod.org
 Override it only when the operator gives you a different host:
 
 ```bash
-export SKILLFLOWER_BASE_URL="https://another-skillflower-host"
+export SEND_FLOWERS_BASE_URL="https://another-send-flowers-host"
 ```
 
-Ask the Skillflower operator for an API key, then either export it:
+Ask the Send Flowers operator for an API key, then either export it:
 
 ```bash
-export SKILLFLOWER_API_KEY="your-skillflower-api-key"
+export SEND_FLOWERS_API_KEY="your-send-flowers-api-key"
 ```
 
 or cache it locally:
 
 ```bash
-mkdir -p ~/.skillflower
-printf '%s\n' "your-skillflower-api-key" > ~/.skillflower/api-key
-chmod 600 ~/.skillflower/api-key
+mkdir -p ~/.send-flowers
+printf '%s\n' "your-send-flowers-api-key" > ~/.send-flowers/api-key
+chmod 600 ~/.send-flowers/api-key
 ```
 
 The skill can be installed before the API key is set. It must not create
@@ -87,10 +87,10 @@ must issue or accept the key. A random local key will be rejected.
 ## How Agents Should Use It
 
 1. Read [SKILL.md](SKILL.md).
-2. Use the built-in base URL unless `SKILLFLOWER_BASE_URL` overrides it.
-3. Load `SKILLFLOWER_API_KEY` from env or `~/.skillflower/api-key`.
+2. Use the built-in base URL unless `SEND_FLOWERS_BASE_URL` overrides it.
+3. Load `SEND_FLOWERS_API_KEY` from env or `~/.send-flowers/api-key`.
 4. Collect only the order data needed from the user.
-5. Call the hosted Skillflower API as described in the skill.
+5. Call the hosted Send Flowers API as described in the skill.
 6. Return the checkout link for browser payment.
 7. Check order status only after payment is complete.
 
@@ -102,7 +102,7 @@ must issue or accept the key. A random local key will be rejected.
 - The skill does not collect raw card number, CVV, or bank data in chat.
 - The skill does not expose provider credentials, admin workflows, deployment
   config, or private application source.
-- If the Skillflower API returns an error, the agent must show the exact error
+- If the Send Flowers API returns an error, the agent must show the exact error
   and stop. It must not invent products, checkout sessions, provider order ids,
   payment success, or order status.
 
