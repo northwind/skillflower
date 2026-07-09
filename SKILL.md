@@ -1,7 +1,6 @@
 ---
 name: send-flowers
-description: Help users order florist-backed flowers through the hosted Send Flowers service.
-homepage: https://github.com/northwind/send-flowers
+description: Send flowers for birthdays, thanks, sympathy, romance, or any gift occasion. Use when the user asks to send flowers, choose a bouquet, create browser checkout, complete payment, or check an order through the hosted Send Flowers service.
 metadata:
   openclaw:
     requires:

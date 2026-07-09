@@ -109,6 +109,8 @@ must issue or accept the key. A random local key will be rejected.
 ## Files
 
 - [SKILL.md](SKILL.md): installable universal agent skill.
+- [agents/openai.yaml](agents/openai.yaml): Codex UI metadata, prompt, and icon paths.
+- [assets/send-flowers-icon.svg](assets/send-flowers-icon.svg): skill icon.
 - [references/ORDERING_CONTRACT.md](references/ORDERING_CONTRACT.md): API shape used by the skill.
 - [references/OPENCLAW_MARKETPLACE.md](references/OPENCLAW_MARKETPLACE.md): maintainer publishing notes.
 - [llm.txt](llm.txt): short machine-readable summary.

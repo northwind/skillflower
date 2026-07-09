@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Send Flowers</title>
+  <desc id="desc">A wrapped bouquet with three flowers.</desc>
+  <rect width="256" height="256" rx="56" fill="#2F7D5C"/>
+  <path d="M128 74c0 21-16 38-36 38-10 0-18-8-18-18 0-20 17-36 38-36 9 0 16 7 16 16Z" fill="#F7C8D4"/>
+  <path d="M128 74c0 21 16 38 36 38 10 0 18-8 18-18 0-20-17-36-38-36-9 0-16 7-16 16Z" fill="#FFD166"/>
+  <path d="M128 55c15 0 27 12 27 27s-12 27-27 27-27-12-27-27 12-27 27-27Z" fill="#FFF7E6"/>
+  <path d="M93 126c19 13 34 35 35 63M163 126c-19 13-34 35-35 63M128 109v80" fill="none" stroke="#D6F4E2" stroke-width="12" stroke-linecap="round"/>
+  <path d="M68 151h120l-24 61H92l-24-61Z" fill="#F4F0E8"/>
+  <path d="M68 151h120l-24 61H92l-24-61Z" fill="none" stroke="#1D4F3C" stroke-width="10" stroke-linejoin="round"/>
+  <path d="m92 151 36 38 36-38" fill="none" stroke="#1D4F3C" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,9 @@
+interface:
+  display_name: "Send Flowers"
+  short_description: "Send flowers for birthdays, thanks, sympathy, and more."
+  icon_small: "./assets/send-flowers-icon.svg"
+  icon_large: "./assets/send-flowers-icon.svg"
+  brand_color: "#2F7D5C"
+  default_prompt: "Use $send-flowers to send flowers for an occasion, recommend a bouquet, create checkout, or check an order."
+policy:
+  allow_implicit_invocation: true

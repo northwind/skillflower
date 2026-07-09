@@ -32,6 +32,7 @@ and changelog.
 Keep this repository limited to:
 
 - `SKILL.md`
+- agent UI metadata and icon assets
 - user install instructions
 - ordering contract
 - marketplace notes
